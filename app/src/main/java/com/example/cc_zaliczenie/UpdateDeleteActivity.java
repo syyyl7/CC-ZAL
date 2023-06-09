@@ -36,16 +36,13 @@ public class UpdateDeleteActivity extends AppCompatActivity {
 
         databaseHelper = new DatabaseHelper(this);
 
-        // Retrieve the song ID from the intent
         Intent intent = getIntent();
         songId = intent.getIntExtra("id", -1);
 
         if (songId == -1) {
-            // Invalid song ID, finish the activity
             Toast.makeText(this, "Invalid song ID", Toast.LENGTH_SHORT).show();
             finish();
         } else {
-            // Valid song ID, load the song details
             loadSongDetails();
         }
 
