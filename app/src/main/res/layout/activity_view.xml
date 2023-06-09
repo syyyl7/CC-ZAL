@@ -5,19 +5,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".MainActivity">
+    tools:context=".ViewActivity">
 
-    <Button
-        android:id="@+id/add_button"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add Song" />
-
-    <Button
-        android:id="@+id/view_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="View Songs" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>
 
