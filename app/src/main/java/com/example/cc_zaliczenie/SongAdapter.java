@@ -38,8 +38,8 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> {
         String title = songTitles.get(position);
         String author = songAuthors.get(position);
 
-        holder.titleTextView.setText(title);
-        holder.authorTextView.setText(author);
+        holder.titleTextView.setText("Title: " + title);
+        holder.authorTextView.setText("Artist: " + author);
     }
 
     @Override
