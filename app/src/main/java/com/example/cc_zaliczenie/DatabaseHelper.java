@@ -64,8 +64,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int rowsAffected = db.delete(TABLE_NAME, COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
         db.close();
         return rowsAffected > 0;
+
     }
 }
+
 
 
 

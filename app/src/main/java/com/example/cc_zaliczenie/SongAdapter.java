@@ -12,13 +12,18 @@ import java.util.List;
 
 public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> {
 
-    private List<String> songList;
+    private List<String> songTitles;
+    private List<String> songAuthors;
     private OnItemClickListener listener;
 
-    public SongAdapter(List<String> songList, OnItemClickListener listener) {
-        this.songList = songList;
-        this.listener = listener;
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
 
+    public SongAdapter(List<String> songTitles, List<String> songAuthors, OnItemClickListener listener) {
+        this.songTitles = songTitles;
+        this.songAuthors = songAuthors;
+        this.listener = listener;
     }
 
     @NonNull
@@ -30,45 +35,37 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String song = songList.get(position);
-        holder.bind(song, listener);
+        String title = songTitles.get(position);
+        String author = songAuthors.get(position);
+
+        holder.titleTextView.setText(title);
+        holder.authorTextView.setText(author);
     }
 
     @Override
     public int getItemCount() {
-        return songList.size();
+        return songTitles.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        TextView titleTextView;
+        TextView authorTextView;
 
-        private TextView songTitleTextView;
-        public TextView authorText;
-
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
-            songTitleTextView = itemView.findViewById(R.id.title_text);
-            authorText = itemView.findViewById(R.id.author_text);
+            titleTextView = itemView.findViewById(R.id.title_text);
+            authorTextView = itemView.findViewById(R.id.author_text);
+
+            itemView.setOnClickListener(this);
         }
 
-        public void bind(final String song, final OnItemClickListener listener) {
-            songTitleTextView.setText(song);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
-                        listener.onItemClick(position);
-                    }
-                }
-            });
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
+                listener.onItemClick(position);
+            }
         }
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(int position);
     }
 }
-
-
 

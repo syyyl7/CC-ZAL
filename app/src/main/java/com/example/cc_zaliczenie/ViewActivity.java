@@ -1,5 +1,7 @@
 package com.example.cc_zaliczenie;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -20,6 +22,7 @@ public class ViewActivity extends AppCompatActivity implements SongAdapter.OnIte
     private SongAdapter songAdapter;
     private List<Integer> songIds;
     private List<String> songTitles;
+    private List<String> songAuthors;
     private DatabaseHelper databaseHelper;
 
     @Override
@@ -32,8 +35,9 @@ public class ViewActivity extends AppCompatActivity implements SongAdapter.OnIte
 
         songIds = new ArrayList<>();
         songTitles = new ArrayList<>();
+        songAuthors = new ArrayList<>();
 
-        songAdapter = new SongAdapter(songTitles, this);
+        songAdapter = new SongAdapter(songTitles, songAuthors, this);
         recyclerView.setAdapter(songAdapter);
 
         databaseHelper = new DatabaseHelper(this);
@@ -44,6 +48,7 @@ public class ViewActivity extends AppCompatActivity implements SongAdapter.OnIte
     private void loadSongs() {
         songIds.clear();
         songTitles.clear();
+        songAuthors.clear();
 
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + DatabaseHelper.TABLE_NAME, null);
@@ -52,9 +57,11 @@ public class ViewActivity extends AppCompatActivity implements SongAdapter.OnIte
             do {
                 int songId = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_ID));
                 String title = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_TITLE));
+                String author = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_AUTHOR));
 
                 songIds.add(songId);
                 songTitles.add(title);
+                songAuthors.add(author);
             } while (cursor.moveToNext());
         }
 
@@ -72,4 +79,8 @@ public class ViewActivity extends AppCompatActivity implements SongAdapter.OnIte
         intent.putExtra("id", clickedSongId);
         startActivity(intent);
     }
+
 }
+
+
+

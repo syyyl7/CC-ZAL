@@ -80,7 +80,6 @@ public class UpdateDeleteActivity extends AppCompatActivity {
             }
         });
     }
-
     private void loadSongDetails() {
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + DatabaseHelper.TABLE_NAME + " WHERE " +
